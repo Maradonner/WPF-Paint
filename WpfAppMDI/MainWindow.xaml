@@ -1,0 +1,81 @@
+﻿<Window x:Class="WpfAppMDI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:ad="http://schemas.xceed.com/wpf/xaml/avalondock"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
+        mc:Ignorable="d"
+        Background="#d0d4e4"
+        Title="MainWindow" MinHeight="450" MinWidth="800" Height="450" Width="800" Closing="Window_Closing_1">
+
+        
+    <Grid  ScrollViewer.HorizontalScrollBarVisibility="Auto">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Menu>
+            <MenuItem Header="File">
+                <MenuItem Click="AddNewDocumentButton_Click" Header="New File"></MenuItem>
+                <MenuItem Click="OpenImageButton_Click" Header="Open File"></MenuItem>
+                <MenuItem x:Name="Save" Click="Save_Click" IsEnabled="False" Header="Сохранить"></MenuItem>
+                <MenuItem x:Name="SaveAs" Click="SaveAs_Click" IsEnabled="False" Header="Сохранить как"></MenuItem>
+                <MenuItem x:Name="Resize" Click="Resize_Click" IsEnabled="False" Header="Размер холста"></MenuItem>
+                <MenuItem x:Name="StarSettings" Click="StarSettings_Click" Header="Настройки звездочки"></MenuItem>
+
+                <Separator/>
+                <MenuItem Click="Close_Button" Header="Exit"></MenuItem>
+            </MenuItem>
+            
+            <MenuItem Header="Tools">
+
+                <RadioButton Checked="Tools_Click" GroupName="tools"  x:Name="Pen" HorizontalAlignment="Left">
+                    <TextBlock Text="Кисть" VerticalAlignment="Center"/>
+                </RadioButton>
+
+                <RadioButton Checked="Tools_Click" GroupName="tools"  x:Name="Line" HorizontalAlignment="Left">
+                    <TextBlock Text="Линия" VerticalAlignment="Center"/>
+                </RadioButton>
+
+                <RadioButton Checked="Tools_Click" GroupName="tools"  x:Name="Ellipse" HorizontalAlignment="Left">
+                    <TextBlock Text="Эллипс" VerticalAlignment="Center"/>
+                </RadioButton>
+
+                <RadioButton Checked="Tools_Click" GroupName="tools"  x:Name="Eraser" HorizontalAlignment="Left">
+                    <TextBlock Text="Ластик" VerticalAlignment="Center"/>
+                </RadioButton>
+
+                <RadioButton Checked="Tools_Click" GroupName="tools"  x:Name="Star" HorizontalAlignment="Left">
+                    <TextBlock Text="Звездочка" VerticalAlignment="Center"/>
+                </RadioButton>
+
+            </MenuItem>
+            
+            <MenuItem x:Name="ColorGroupPickerAdvantage" Header="Color picker">
+                <xctk:ColorPicker
+                        Name="ClrPcker_Background"
+                        DisplayColorTooltip="True"
+                        SelectedColor="Black"
+                        SelectedColorChanged="ClrPcker_Background_SelectedColorChanged"/>
+            </MenuItem>
+            <StackPanel Orientation="Horizontal" Width="400">
+                <Label Content="Thickness:" Margin="5,0,5,0"/>
+                <Slider Minimum="1" Maximum="20" Value="1" x:Name="ThicknessSlider" Width="200" 
+                            IsSnapToTickEnabled="True"
+                            TickFrequency="1"/>
+                <Label Content="{Binding ElementName=ThicknessSlider, Path=Value}" Margin="5,0,5,0" FontWeight="Bold"/>
+            </StackPanel>
+        </Menu>
+        
+        <ad:DockingManager x:Name="dockingManager" Grid.Row="1" ActiveContentChanged="NewDocument_IsActiveChanged">
+            <ad:LayoutRoot>
+                <ad:LayoutPanel Orientation="Horizontal">
+                    <ad:LayoutDocumentPane  x:Name="documentPane">
+                    </ad:LayoutDocumentPane>
+                </ad:LayoutPanel>
+            </ad:LayoutRoot>
+        </ad:DockingManager>
+    </Grid>
+</Window>
